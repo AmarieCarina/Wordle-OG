@@ -1,4 +1,8 @@
 ## Tema 2
+### Indicatii
+- `main.cpp` -> principal
+- `src/Example.cpp` -> cod clasa
+- `include/Example.h` -> header clasa
 
 #### Cerințe
 - [ ] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
@@ -30,11 +34,12 @@
 - [ ] tag de `git` pe commit cu **toate bifele**: de exemplu `v0.2`
 - [ ] code review #2 2 proiecte
 
+## Resurse
+- [NYT WORDLE - Daily Word Game](https://www.nytimes.com/games/wordle/index.html)
+- [SFML library](https://www.sfml-dev.org/tutorials/3.0/graphics/draw/)
+
 ## License
 
 The project is licensed under [AGPLv3](LICENSE).
 
 The [template repository](https://github.com/mcmarius/oop-template) itself is licensed under [Unlicense](LICENSE.template).
-
-## Resurse
-
