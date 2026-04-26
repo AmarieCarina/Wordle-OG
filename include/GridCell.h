@@ -18,8 +18,8 @@ public:
     GridCell(float x, float y, float size, const sf::Font& font);
     ~GridCell() override = default;
 
-    //setters
     void setLetter(char c);
+    char getLetter() const;
 
     void updateState(CellState state); // modif culoare
 

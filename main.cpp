@@ -9,6 +9,7 @@
 #include "Button.h"
 #include "Key.h"
 #include "Label.h"
+#include "GE.h"
 
 
 int main() {
@@ -21,28 +22,8 @@ int main() {
         std::cout<<"Eroare la incarcarea fontului";
     }
 
-///////GRIDCELL MATRIX
-    const int cols = 5;
-    const int rows = 6;
-    const float cell_size = 50.0f;
-    const float margin = 10.0f;
-    const float window_size = 800.0f;
-
-    const float totalWidth=(cols*cell_size)+((cols-1)*margin);
-    const float totalHeight=(rows*cell_size)+((rows-1)*margin);
-
-    const float startX = (window_size - totalWidth)/2.0f;
-    const float startY = (window_size - totalHeight)/2.0f - float(100);
-
-    std::vector<GridCell> grid;
-
-    for (int r = 0; r< rows; r++) {
-        for (int c = 0; c < cols; c++) {
-            float x = startX + c * (cell_size + margin);
-            float y = startY + r * (cell_size + margin);
-            grid.emplace_back(x,y,cell_size, font);
-        }
-    }
+///////GAME ENGINE
+    GE engine(font);
 
 ////////POP UP INTRO + BUTON PLAY
     std::unique_ptr<UI> Intro = std::make_unique<PopUp>(150.f, 150.f, 500.f, 500.f);
@@ -65,32 +46,6 @@ int main() {
         }
     });
 
-//////////KEYBOARD
-    std::vector<std::string> layout {
-            "QWERTYUIOP",
-            "ASDFGHJKL",
-            "ZXCVBNM"
-    };
-    std::vector<Key> keyboard;
-
-    float xInitial = 150.0f; //stanga
-    const float yInitial = 550.0f; //jos
-    const float offx = 50.0f; //distanta dintre taste sau randuri
-    const float offy = 70.0f;
-    const float kWidth = 40.0f;
-    const float kHeight = 55.0f;
-    float offset=1;
-
-    for (int r=0; r < layout.size(); r++) {
-        for (int c = 0; c < layout[r].size(); c++) {
-            float x = xInitial + c * offx;
-            float y = yInitial + r * offy;
-            keyboard.emplace_back(x,y,kWidth, kHeight,layout[r][c],font);
-        }
-        xInitial += 20.0f * offset;
-        offset *= 2.5;
-    }
-
 
 //////////////////////////////////////////////////////////////////////////////////
 ////////////////// B U C L A   W H I L E /////////////////////////////////////////
@@ -103,6 +58,7 @@ int main() {
                 window.close();
             }
 
+            //INPUT MOUSE
             if (const auto* mouseBtn = event->getIf<sf::Event::MouseButtonPressed>()) {
                 if (mouseBtn->button == sf::Mouse::Button::Left) {
                     //CLICK STANGA
@@ -118,26 +74,39 @@ int main() {
                         playButton.click();
                     }
 
+                    auto& keyboard = engine.getKeyboard();
                     for (auto& k:keyboard) {
                         if (k.isMouseOver(mousePos)) {
                             k.click();
+                            engine.addLetter(k.getLetter());
                         }
                     }
 
                 }
+
+
             }
 
+            //INPUT TASTATURA FIZICA (litere)
+            if (const auto* textEvent = event->getIf<sf::Event::TextEntered>()) {
+                engine.addLetter(static_cast<char>(textEvent->unicode));
+
+            }
+
+            //INPUT TASTATURA FIZICA (enter+backspace)
+            if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>()) {
+                if (keyEvent->code == sf::Keyboard::Key::Enter) {
+                    engine.checkGuess();
+                }
+                if (keyEvent->code == sf::Keyboard::Key::Backspace) {
+                    engine.deleteLastLetter();
+                }
+            }
         }
 
         window.clear(sf::Color::Black);
         ////chestii care se repeta la infinit
-        for (auto& celula:grid) {
-            celula.draw(window);
-        }
-
-        for (auto& k:keyboard) {
-            k.draw(window);
-        }
+        engine.draw(window);
 
         if (Instr && Instr->getVisible()) {
             Instr->draw(window);

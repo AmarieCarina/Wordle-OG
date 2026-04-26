@@ -24,6 +24,11 @@ void GridCell::setLetter(char c) {
     });
 }
 
+char GridCell::getLetter() const {
+    sf::String s = letter.getString();
+    return s.isEmpty() ? ' ' : static_cast<char>(s[0]);
+}
+
 void GridCell::updateState(CellState newState) {
     state = newState;
     sf::Color color= getColorForState(newState);
