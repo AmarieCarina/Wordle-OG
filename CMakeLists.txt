@@ -48,6 +48,11 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/GridCell.cpp
         include/PopUp.h
         src/PopUp.cpp
+        include/Button.h
+        src/Button.cpp
+        include/Key.h
+        include/Label.h
+        src/Label.cpp
 )
 target_sources(${MAIN_EXECUTABLE_NAME}
     PRIVATE

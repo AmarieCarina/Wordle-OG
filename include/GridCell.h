@@ -12,6 +12,7 @@ class GridCell : public UI {
 private:
     sf::RectangleShape box; //container-ul in sine al celulei
     sf::Text letter;
+    CellState state;
 public:
     //constructori
     GridCell(float x, float y, float size, const sf::Font& font);
@@ -19,9 +20,14 @@ public:
 
     //setters
     void setLetter(char c);
-    void setState(CellState state); //culoarea
+
+    void updateState(CellState state); // modif culoare
 
     //redefinim functia virtuala de desenare
     void draw(sf::RenderWindow& window) override;
+
+    //functie pura, nu opereaza pe datele membre
+    static sf::Color getColorForState(CellState state);
+
 };
 #endif //POO2_GRIDCELL_H

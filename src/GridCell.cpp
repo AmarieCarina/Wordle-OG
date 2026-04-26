@@ -24,27 +24,17 @@ void GridCell::setLetter(char c) {
     });
 }
 
-void GridCell::setState(CellState state) {
-    switch (state) {
-        case CellState::Default:
-            box.setFillColor(sf::Color(50,50,50));//gri inchis
-            break;
-        case CellState::Absent:
-            box.setFillColor(sf::Color(100,100,100));//gri
-            break;
-        case CellState::Present:
-            box.setFillColor(sf::Color(200,180,50));//galben
-            break;
-        case CellState::Correct:
-            box.setFillColor(sf::Color(50,150,50));//verde
-            break;
-    }
+void GridCell::updateState(CellState newState) {
+    state = newState;
+    sf::Color color= getColorForState(newState);
+    box.setFillColor(color);
 }
 
 GridCell::GridCell(float x, float y, float size, const sf::Font& font)
     :   UI{x,y},
         box{{size,size}},
-        letter{font, " ", static_cast<unsigned int>(size * 0.6f)}
+        letter{font, " ", static_cast<unsigned int>(size * 0.6f)},
+        state{CellState::Default}
 {
     //configuram dreptunghiul
     box.setPosition({x,y});
@@ -60,4 +50,14 @@ GridCell::GridCell(float x, float y, float size, const sf::Font& font)
 void GridCell::draw(sf::RenderWindow& window) {
     window.draw(box);
     window.draw(letter);
+}
+
+sf::Color GridCell::getColorForState(CellState state) {
+    switch (state) {
+        case CellState::Absent:return sf::Color(50,50,50); //gri inchis
+        case CellState::Present:return sf::Color(200,180,50); //galben
+        case CellState::Correct:return sf::Color(50,150,50); //verde
+        default: //CellState::Default:
+            return sf::Color(120,120,120);  //gri neutru
+    }
 }

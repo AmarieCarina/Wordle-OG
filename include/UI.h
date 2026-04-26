@@ -4,11 +4,11 @@
 class UI {
 protected:
     sf::Vector2f position; //coordonatele (x,y) pe ecran
-    bool isVisible; //vizibilitatea pe ecran
+    bool isVisible = true; //vizibilitatea pe ecran
 public:
     //constructor, destructor
     UI(float x, float y);
-    virtual ~UI();
+    virtual ~UI()=default;
 
     //forteaza derivatele sa decida CUM se deseneaza
     virtual void draw(sf::RenderWindow& window)=0;
@@ -18,6 +18,6 @@ public:
     bool getVisible()const;
 
     //setare pozitie
-    void setPosition(sf::Vector2f position);
+    void setPosition(sf::Vector2f pos);
 };
 #endif //POO2_UI_H

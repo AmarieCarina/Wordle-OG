@@ -7,7 +7,7 @@ private:
     sf::RectangleShape background;
 
     //vector cu tot felul de componente:
-        //Labels, GridCells, butoane
+        //Labels, GridCells, Button
     std::vector<std::unique_ptr<UI>> elements;
         //unique_ptr: cand PopUp se sterge, se sterg si elementele, fara memory leaks
 
