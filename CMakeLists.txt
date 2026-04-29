@@ -55,6 +55,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/Label.cpp
         include/GE.h
         src/Ge.cpp
+        include/WM.h
+        src/WM.cpp
 )
 target_sources(${MAIN_EXECUTABLE_NAME}
     PRIVATE

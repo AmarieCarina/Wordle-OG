@@ -15,6 +15,7 @@ public:
             state{st}{}
 
     char getLetter() const {return letter;}
+    CellState getState() const {return state;}
 
     void updateState(const CellState newState) {
         //folosim functia statica din GridCell

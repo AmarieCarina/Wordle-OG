@@ -37,6 +37,7 @@
 ## Resurse
 - [NYT WORDLE - Daily Word Game](https://www.nytimes.com/games/wordle/index.html)
 - [SFML library](https://www.sfml-dev.org/tutorials/3.0/graphics/draw/)
+- [GITHUB: shmookey - 3102 common 5-letter words](https://gist.github.com/shmookey/b28e342e1b1756c4700f42f17102c2ff)
 
 ## License
 

@@ -4,6 +4,7 @@
 #include <vector>
 #include "GridCell.h"
 #include "Key.h"
+#include "WM.h"
 
 class GE {
 private:
@@ -17,6 +18,7 @@ private:
     //COMPONENTE UI (compunere)
     std::vector<GridCell> grid;
     std::vector<Key> keyboard;
+    WM wordmanager;
 
     //HELPERI PRIVATI (init)
     void initGrid(sf::Font& font);

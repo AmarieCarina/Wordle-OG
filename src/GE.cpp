@@ -1,15 +1,20 @@
 #include "GE.h"
 #include "GridCell.h"
+#include "Key.h"
+#include "WM.h"
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+
 GE::GE(sf::Font& font)
     :currentRow{0},
     currentCol{0},
     maxRows{6},
     maxCols{5},
-    targetWord{"PIZZA"}
+    targetWord{"UNION"},
+    wordmanager{"assets/words.txt"}
     {
+        //targetWord = wordmanager.getRandomWord();
         initGrid(font);
         initKeyboard(font);
     }
@@ -74,7 +79,7 @@ void GE::addLetter(char c) {
 
     if (upperC < 'A' || upperC > 'Z') {return;}
 
-    if (currentCol <= maxCols) {
+    if (currentCol < maxCols) {
         int index = (currentRow * maxCols) + currentCol;
         grid[index].setLetter(upperC);
         currentCol++;
@@ -100,14 +105,26 @@ void GE::checkGuess() {
         currentGuess += grid[rowStartIndex+i].getLetter();
     }
 
+    //validare
+    if (!wordmanager.isValidWord(currentGuess)) {
+        std::cout<<"Cuvantul nu este in lista!\n";
+        return;
+    }
+
+    //algortimul de colorare
     //vector de stari + copie target
-    std::vector<CellState> results(maxCols, CellState::Absent);
+    std::vector results(maxCols, CellState::Default);
     std::string targetCopy = targetWord;
 
     //PAS 1: LITERELE CORECTE
     for (int i=0; i<maxCols; i++) {
         if (currentGuess[i] == targetCopy[i]) {
             results[i] = CellState::Correct;
+            for (Key& key:keyboard) {
+                if (key.getLetter()==currentGuess[i]) {
+                    key.updateState(CellState::Correct);
+                }
+            }
             targetCopy[i] = '*'; //marcam litera ca fiind folosita
         }
     }
@@ -120,6 +137,13 @@ void GE::checkGuess() {
         for (int j=0;j<maxCols;j++) {
             if (currentGuess[i] == targetCopy[j]) {
                 results[i] = CellState::Present;
+
+                for (Key& key:keyboard) {
+                    if (key.getLetter()==currentGuess[i]) {
+                        if (key.getState() != CellState::Correct)
+                            key.updateState(CellState::Present);
+                    }
+                }
                 targetCopy[j]='*';
                 break;
             }
@@ -128,7 +152,17 @@ void GE::checkGuess() {
 
     //update in GridCell
     for (int i=0;i<maxCols;i++) {
+        char litera = currentGuess[i];
         grid[rowStartIndex + i].updateState(results[i]);
+
+        //update in keyboard
+        for (Key& k: keyboard) {
+            if (k.getLetter()==litera) {
+                if (k.getState()!=CellState::Correct) {
+                    k.updateState(results[i]);
+                }
+            }
+        }
     }
 
     //progres joc
