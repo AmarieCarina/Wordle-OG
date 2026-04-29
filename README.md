@@ -1,6 +1,3 @@
-
----
-
 # Wordle Clone - SFML C++ (tema 2 POO)
 
 O implementare modernă și interactivă a celebrului joc **Wordle**, dezvoltată în C++ folosind biblioteca grafică **SFML**. 
@@ -74,6 +71,11 @@ Siguranța execuției este garantată printr-o ierarhie proprie de excepții, de
 * **Fonturi Personalizate**: Utilizarea `Diplomata-Regular` pentru titluri oferă o estetică distinctă și premium.
 
 ---
+## Resurse
+- [NYT WORDLE - Daily Word Game](https://www.nytimes.com/games/wordle/index.html)
+- [SFML library](https://www.sfml-dev.org/tutorials/3.0/graphics/draw/)
+- [GITHUB: shmookey - 3102 common 5-letter words](https://gist.github.com/shmookey/b28e342e1b1756c4700f42f17102c2ff)
+---
 
 ## Cerințe indeplinite
 - [x] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
@@ -100,10 +102,7 @@ Siguranța execuției este garantată printr-o ierarhie proprie de excepții, de
 - [ ] tag de `git` pe commit cu **toate bifele**: de exemplu `v0.2`
 - [ ] code review #2 2 proiecte
 
-## Resurse
-- [NYT WORDLE - Daily Word Game](https://www.nytimes.com/games/wordle/index.html)
-- [SFML library](https://www.sfml-dev.org/tutorials/3.0/graphics/draw/)
-- [GITHUB: shmookey - 3102 common 5-letter words](https://gist.github.com/shmookey/b28e342e1b1756c4700f42f17102c2ff)
+
 
 ## License
 
