@@ -3,12 +3,13 @@
 #include<fstream>
 #include<iostream>
 #include<random>
+#include<WordleExceptions.h>
 WM::WM(const std::string& filename) {
     std::ifstream f(filename);
     std::string word;
 
     if (!f.is_open()) {
-        std::cout<<"Nu am putut deschide fisierul!"<<std::endl;
+        throw DictionaryException("[Eroare] Nu am putut deschide "+filename);
     }
     while (f>>word) {
         std::transform(word.begin(), word.end(), word.begin(), ::toupper);
@@ -19,6 +20,9 @@ WM::WM(const std::string& filename) {
         }
     }
     f.close();
+    if (words.empty()) {
+        throw DictionaryException("[Eroare] Dictionarul e gol sau nu contine cuvinte de 5 litere!");
+    }
 }
 
 bool WM::isValidWord(const std::string& word) const {

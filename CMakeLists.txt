@@ -57,6 +57,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/Ge.cpp
         include/WM.h
         src/WM.cpp
+        include/WordleExceptions.h
 )
 target_sources(${MAIN_EXECUTABLE_NAME}
     PRIVATE

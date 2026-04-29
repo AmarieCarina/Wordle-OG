@@ -7,10 +7,10 @@ void GridCell::setLetter(char c) {
     //calibrare in centru a literei
 
     //dreptunghiul local al textului
-    sf::FloatRect textRect = letter.getLocalBounds();
+    const sf::FloatRect textRect = letter.getLocalBounds();
 
-    float midX = textRect.size.x / 2.0f;
-    float midY = textRect.size.y / 2.0f;
+    const float midX = textRect.size.x / 2.0f;
+    const float midY = textRect.size.y / 2.0f;
 
     //originea elementului este in centrul sau (nu in coltul din stg sus)
     letter.setOrigin({
@@ -31,7 +31,7 @@ char GridCell::getLetter() const {
 
 void GridCell::updateState(CellState newState) {
     state = newState;
-    sf::Color color= getColorForState(newState);
+    const sf::Color color= getColorForState(newState);
     box.setFillColor(color);
 }
 

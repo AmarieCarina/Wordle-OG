@@ -9,7 +9,7 @@ protected:
     char letter;
     CellState state;
 public:
-    Key(float x, float y, float width, float height, char l, const sf::Font& font, CellState st=CellState::Default)
+    Key(float x, float y, float width, float height, char l, const sf::Font& font, CellState st=CellState::Absent)
         :   Button{x, y, width, height, std::string(1,l), font},
             letter{l},
             state{st}{}

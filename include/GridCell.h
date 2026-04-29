@@ -21,7 +21,7 @@ public:
     void setLetter(char c);
     char getLetter() const;
 
-    void updateState(CellState state); // modif culoare
+    void updateState(CellState newState); // modif culoare
 
     //redefinim functia virtuala de desenare
     void draw(sf::RenderWindow& window) override;

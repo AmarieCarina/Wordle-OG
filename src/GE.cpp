@@ -2,11 +2,12 @@
 #include "GridCell.h"
 #include "Key.h"
 #include "WM.h"
+#include "Label.h"
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-GE::GE(sf::Font& font)
+GE::GE(sf::Font& font, sf::Font& fontTitle)
     :currentRow{0},
     currentCol{0},
     maxRows{6},
@@ -14,9 +15,22 @@ GE::GE(sf::Font& font)
     targetWord{"UNION"},
     wordmanager{"assets/words.txt"}
     {
-        //targetWord = wordmanager.getRandomWord();
+        ////////////////////targetWord = wordmanager.getRandomWord();/////////////////////////////
         initGrid(font);
         initKeyboard(font);
+
+        final = std::make_unique<PopUp>(150.f, 200.f, 500.f, 200.f);
+        final->addElement(std::make_unique<Label>(400.f, 250.f,"Thanks for playing!", fontTitle,20));
+        int index=0;
+        for (int i=0;i<5;i++) {
+            auto x = static_cast<float>(300+i*10+index);
+            auto cell=std::make_unique<GridCell>(x,300.f,30,font);
+            cell->setLetter(targetWord[i]);
+            final->addElement(std::move(cell));
+            index+=26;
+        }
+         final->setVisible(false);
+
     }
 
 void GE::initGrid(sf::Font& font) {
@@ -24,16 +38,16 @@ void GE::initGrid(sf::Font& font) {
     const float margin = 10.0f;
     const float window_size = 800.0f;
 
-    const float totalWidth=(maxCols*cell_size)+((maxCols-1)*margin);
-    const float totalHeight=(maxRows*cell_size)+((maxRows-1)*margin);
+    const float totalWidth=(static_cast<float>(maxCols)*cell_size)+(static_cast<float>(maxCols-1)*margin);
+    const float totalHeight=(static_cast<float>(maxRows)*cell_size)+(static_cast<float>(maxRows-1)*margin);
 
     const float startX = (window_size - totalWidth)/2.0f;
-    const float startY = (window_size - totalHeight)/2.0f - float(100);
+    const float startY = (window_size - totalHeight)/2.0f - static_cast<float>(100);
 
     for (int r = 0; r< maxRows; r++) {
         for (int c = 0; c < maxCols; c++) {
-            float x = startX + c * (cell_size + margin);
-            float y = startY + r * (cell_size + margin);
+            float x = startX + static_cast<float>(c) * (cell_size + margin);
+            float y = startY + static_cast<float>(r) * (cell_size + margin);
             grid.emplace_back(x,y,cell_size, font);
         }
     }
@@ -54,10 +68,10 @@ void GE::initKeyboard(sf::Font& font) {
     const float kHeight = 55.0f;
     float rowIndent=1;
 
-    for (int r=0; r < layout.size(); r++) {
-        for (int c = 0; c < layout[r].size(); c++) {
-            float x = xInitial + c * offx;
-            float y = yInitial + r * offy;
+    for (size_t r=0; r < layout.size(); r++) {
+        for (size_t c = 0; c < layout[r].size(); c++) {
+            float x = xInitial + static_cast<float>(c) * offx;
+            float y = yInitial + static_cast<float>(r) * offy;
             keyboard.emplace_back(x,y,kWidth, kHeight,layout[r][c],font);
         }
         xInitial += 20.0f * rowIndent;
@@ -72,15 +86,18 @@ void GE::draw(sf::RenderWindow& window) {
     for (auto& key : keyboard) {
         key.draw(window);
     }
+    if (final && final->getVisible()) {
+        final->draw(window);
+    }
 }
 
 void GE::addLetter(char c) {
-    char upperC = (c >= 'a' && c <= 'z') ? (c-32) : c;
+    const char upperC = (c >= 'a' && c <= 'z') ? static_cast<char>(c-32) : c;
 
     if (upperC < 'A' || upperC > 'Z') {return;}
 
     if (currentCol < maxCols) {
-        int index = (currentRow * maxCols) + currentCol;
+        const int index = (currentRow * maxCols) + currentCol;
         grid[index].setLetter(upperC);
         currentCol++;
     }
@@ -99,8 +116,8 @@ void GE::checkGuess() {
         //nu facem nimic daca randul nu e plin
 
     //extragem cuvantul din literele introduse
-    std::string currentGuess = "";
-    int rowStartIndex = currentRow * maxCols;
+    std::string currentGuess;
+    const int rowStartIndex = currentRow * maxCols;
     for (int i=0;i<maxCols;i++) {
         currentGuess += grid[rowStartIndex+i].getLetter();
     }
@@ -167,12 +184,12 @@ void GE::checkGuess() {
 
     //progres joc
     if (currentGuess == targetWord) {
-        std::cout<<"Felicitari!"<<std::endl;
+        final->setVisible(true);
     }else
         if (currentRow<maxRows-1) {
             currentRow++;
             currentCol = 0;
         } else {
-            std::cout<<"Ai pierdut! Cuvantul era: "<<targetWord<<std::endl;
+            final->setVisible(true);
         }
 }

@@ -4,10 +4,10 @@
 #include <vector>
 #include "GridCell.h"
 #include "Key.h"
+#include "PopUp.h"
 #include "WM.h"
 
 class GE {
-private:
     //DATE LOGICE
     int currentRow;
     int currentCol;
@@ -15,17 +15,19 @@ private:
     const int maxCols;
     std::string targetWord; //cuvantul de ghicit
 
-    //COMPONENTE UI (compunere)
+    //COMPONENTE UI
     std::vector<GridCell> grid;
     std::vector<Key> keyboard;
+    std::unique_ptr<PopUp> final;
     WM wordmanager;
+
 
     //HELPERI PRIVATI (init)
     void initGrid(sf::Font& font);
     void initKeyboard(sf::Font& font);
 
 public:
-    GE(sf::Font& font);
+    GE(sf::Font& font, sf::Font& fontTitle);
 
     void addLetter(char c);
 
