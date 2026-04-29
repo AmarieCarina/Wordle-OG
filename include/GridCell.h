@@ -2,6 +2,7 @@
 #define POO2_GRIDCELL_H
 #include "UI.h"
 enum class CellState {
+    Key,
     Default,
     Absent,
     Present,

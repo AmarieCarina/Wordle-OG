@@ -61,7 +61,8 @@ sf::Color GridCell::getColorForState(CellState state) {
     switch (state) {
         case CellState::Absent:return sf::Color(50,50,50); //gri inchis
         case CellState::Present:return sf::Color(200,180,50); //galben
-        case CellState::Correct:return sf::Color(50,150,50); //verde
+        case CellState::Correct:return sf::Color(50,150,50);
+        // case CellState::Key:return sf::Color(127,127,127);
         default: //CellState::Default:
             return sf::Color(120,120,120);  //gri neutru
     }

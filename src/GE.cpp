@@ -13,7 +13,9 @@ GE::GE(sf::Font& font, sf::Font& fontTitle)
     maxRows{6},
     maxCols{5},
     targetWord{"UNION"},
-    wordmanager{"assets/words.txt"}
+    wordmanager{"assets/words.txt"},
+    warningLabel{350.f,80.f,"",font,20},
+    showWarning{false}
     {
         ////////////////////targetWord = wordmanager.getRandomWord();/////////////////////////////
         initGrid(font);
@@ -89,6 +91,14 @@ void GE::draw(sf::RenderWindow& window) {
     if (final && final->getVisible()) {
         final->draw(window);
     }
+    if (showWarning) {
+        if (warningClock.getElapsedTime().asSeconds()<2.0f) {
+            warningLabel.draw(window);
+        }
+        else {
+            showWarning = false;
+        }
+    }
 }
 
 void GE::addLetter(char c) {
@@ -106,14 +116,19 @@ void GE::addLetter(char c) {
 void GE::deleteLastLetter() {
     if (currentCol > 0) {
         currentCol--;
-        int index = (currentRow * maxCols) + currentCol;
+        const int index = (currentRow * maxCols) + currentCol;
         grid[index].setLetter(' ');
     }
 }
 
 void GE::checkGuess() {
-    if (currentCol < maxCols) return;
-        //nu facem nimic daca randul nu e plin
+    if (currentCol < maxCols) {
+        warningLabel.setText("Too short!");
+        showWarning = true;
+        warningClock.restart();
+        return;
+    }
+
 
     //extragem cuvantul din literele introduse
     std::string currentGuess;
@@ -122,11 +137,14 @@ void GE::checkGuess() {
         currentGuess += grid[rowStartIndex+i].getLetter();
     }
 
-    //validare
+/////validare//////////////////////////////////
     if (!wordmanager.isValidWord(currentGuess)) {
-        std::cout<<"Cuvantul nu este in lista!\n";
+        warningLabel.setText("Not in word list!");
+        showWarning = true;
+        warningClock.restart();
         return;
     }
+    showWarning=false;
 
     //algortimul de colorare
     //vector de stari + copie target
@@ -193,3 +211,5 @@ void GE::checkGuess() {
             final->setVisible(true);
         }
 }
+
+

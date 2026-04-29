@@ -9,7 +9,7 @@ protected:
     char letter;
     CellState state;
 public:
-    Key(float x, float y, float width, float height, char l, const sf::Font& font, CellState st=CellState::Absent)
+    Key(float x, float y, float width, float height, char l, const sf::Font& font, const CellState st=CellState::Key)
         :   Button{x, y, width, height, std::string(1,l), font},
             letter{l},
             state{st}{}
@@ -19,7 +19,7 @@ public:
 
     void updateState(const CellState newState) {
         //folosim functia statica din GridCell
-        sf::Color color = GridCell::getColorForState(newState);
+        const sf::Color color = GridCell::getColorForState(newState);
         shape.setFillColor(color);
     }
 

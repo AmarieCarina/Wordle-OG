@@ -6,6 +6,7 @@
 #include "Key.h"
 #include "PopUp.h"
 #include "WM.h"
+#include "Label.h"
 
 class GE {
     //DATE LOGICE
@@ -21,6 +22,10 @@ class GE {
     std::unique_ptr<PopUp> final;
     WM wordmanager;
 
+    //CAZURI LIMITA
+    Label warningLabel;
+    sf::Clock warningClock;
+    bool showWarning;
 
     //HELPERI PRIVATI (init)
     void initGrid(sf::Font& font);
@@ -38,6 +43,7 @@ public:
     void draw(sf::RenderWindow& window);
 
     std::vector<Key>& getKeyboard() {return keyboard;}
+
 };
 
 #endif //POO2_GE_H
