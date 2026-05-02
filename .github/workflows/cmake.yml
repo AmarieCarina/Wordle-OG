@@ -208,6 +208,9 @@ jobs:
       - name: Install packages
         uses: ./.github/actions/install-packages
 
+      - name: Clean build directory
+        run: rm -rf ${{ env.BUILD_DIR }}
+
       - name: Configure CMake
         uses: ./.github/actions/configure-cmake
         with:
