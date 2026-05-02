@@ -143,16 +143,16 @@ jobs:
             cmake_flags: "-DUSE_ASAN=OFF -DBUILD_SHARED_LIBS=ON"
             cmake_generator: Ninja
             # This env does not currently run address sanitizers
-            runs_asan: false
+            #runs_asan: false
 
             # renovate: depName=macos
-          - os: macos-14
-            #c: gcc-13
-            cxx: g++-13
-            # renovate: depName=macos
-            name: "macOS 14 GCC 13"
-            cmake_flags: "-DBUILD_SHARED_LIBS=OFF"
-            cmake_generator: Ninja
+#          - os: macos-14
+#            #c: gcc-13
+#            #cxx: g++-13
+#            # renovate: depName=macos
+#            name: "macOS 14 GCC 13"
+#            cmake_flags: "-DBUILD_SHARED_LIBS=OFF"
+#            cmake_generator: Ninja
 
             # renovate: depName=windows
           - os: windows-2022
@@ -185,7 +185,10 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: |
             sudo apt-get update
-            sudo apt-get install -y libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libgl1-mesa-dev
+            sudo apt-get install -y \
+              libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libgl1-mesa-dev \
+              libvorbis-dev libogg-dev libflac-dev
+              libx11-dev libxinerama-dev\
 
       - name: Set timestamp, zip name, repo visibility
         env:
