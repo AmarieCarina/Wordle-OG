@@ -184,11 +184,8 @@ jobs:
       - name: Install Linux dependencies  # <--- ACESTA ESTE PASUL NOU
         if: startsWith(matrix.os, 'ubuntu')
         run: |
-            sudo apt-get update
-            sudo apt-get install -y \
-              libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libgl1-mesa-dev \
-              libvorbis-dev libogg-dev libflac-dev \
-              libx11-dev libxinerama-dev\
+          sudo apt-get update
+          sudo apt-get install -y libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libgl1-mesa-dev libvorbis-dev libogg-dev libflac-dev libxinerama-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libfreetype6-dev
 
       - name: Set timestamp, zip name, repo visibility
         env:

@@ -54,7 +54,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/Label.h
         src/Label.cpp
         include/GE.h
-        src/Ge.cpp
+        src/GE.cpp
         include/WM.h
         src/WM.cpp
         include/WordleExceptions.h
