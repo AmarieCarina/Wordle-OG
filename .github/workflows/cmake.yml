@@ -74,17 +74,6 @@ jobs:
       - name: Run clang-tidy
         uses: ./.github/actions/clang-tidy
 
-      - name: Install dependencies
-        run: \
-            sudo apt-get update
-            sudo apt-get install -y \
-            libx11-dev \
-            libxrandr-dev \
-            libxcursor-dev \
-            libxi-dev \
-            libudev-dev \
-            libgl1-mesa-dev
-
   build:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
@@ -158,7 +147,7 @@ jobs:
 
             # renovate: depName=macos
           - os: macos-14
-            c: gcc-13
+            #c: gcc-13
             cxx: g++-13
             # renovate: depName=macos
             name: "macOS 14 GCC 13"
@@ -192,7 +181,8 @@ jobs:
         # renovate: datasource=github-tags depName=actions/checkout versioning=loose
         uses: actions/checkout@v6.0.2
 
-      - name: Install dependencies  # <--- ACESTA ESTE PASUL NOU
+      - name: Install Linux dependencies  # <--- ACESTA ESTE PASUL NOU
+        if: startsWith(matrix.os, 'ubuntu')
         run: |
             sudo apt-get update
             sudo apt-get install -y libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libgl1-mesa-dev
@@ -223,9 +213,9 @@ jobs:
         with:
           custom_flags: ${{ matrix.cmake_flags }}
           warnings_as_errors: 'ON'
-        env:
-          CC: ${{ runner.os == 'macOS' && 'clang' || '' }}
-          CXX: ${{ runner.os == 'macOS' && 'clang++' || '' }}
+#        env:
+#          CC: ${{ runner.os == 'macOS' && 'clang' || '' }}
+#          CXX: ${{ runner.os == 'macOS' && 'clang++' || '' }}
 
       - name: Build
         run: |
