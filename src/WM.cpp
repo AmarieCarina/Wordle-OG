@@ -3,6 +3,8 @@
 #include<fstream>
 #include<iostream>
 #include<random>
+#include <algorithm>
+#include <cctype>
 #include<WordleExceptions.h>
 WM::WM(const std::string& filename) {
     std::ifstream f(filename);
@@ -12,7 +14,8 @@ WM::WM(const std::string& filename) {
         throw DictionaryException("[Eroare] Nu am putut deschide "+filename);
     }
     while (f>>word) {
-        std::transform(word.begin(), word.end(), word.begin(), ::toupper);
+        std::ranges::transform(word.begin(), word.end(), word.begin(),
+            [](const unsigned char c){return std::toupper(c); });
 
         if (word.length()==5) {
             dictionary.insert(word);
