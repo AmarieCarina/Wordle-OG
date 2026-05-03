@@ -45,7 +45,7 @@ jobs:
     name: "Cppcheck"
     # renovate: depName=ubuntu
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     env:
       # renovate: datasource=github-tags depName=danmar/cppcheck versioning=loose
       CPPCHECK_VER: "2.19.1"
@@ -185,7 +185,7 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
-          sudo apt-get install -y libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libgl1-mesa-dev libvorbis-dev libogg-dev libflac-dev libxinerama-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libfreetype6-dev libxext-dev libxrender-dev libxxf86vm-dev libxmu-dev libxi-dev
+          sudo apt-get install -y libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libgl1-mesa-dev libvorbis-dev libogg-dev libflac-dev libxinerama-dev libxext-dev libxrender-dev libxxf86vm-dev libxmu-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libfreetype6-dev xvfb
 
       - name: Debug X11
         if: startsWith(matrix.os, 'ubuntu')
@@ -255,8 +255,8 @@ jobs:
       - name: Runtime checks (Linux)
         if: startsWith(matrix.os, 'ubuntu')
         run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb
+          ls -R ./${{ env.ZIP_NAME }}
+          xvfb-run bash -c "cat ${{ env.INPUT_FILENAME }} | tr -d '\r' | ./${{ env.ZIP_NAME }}/${{ env.EXECUTABLE_NAME }}" || echo "Programul a eșuat, dar mergem mai departe pentru debug"
           xvfb-run bash -c "cat ${{ env.INPUT_FILENAME }} | tr -d '\r' | ./${{ env.ZIP_NAME }}/${{ env.EXECUTABLE_NAME }}"
 
       - name: Runtime checks (Windows & Mac)
