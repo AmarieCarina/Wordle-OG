@@ -45,7 +45,7 @@ jobs:
     name: "Cppcheck"
     # renovate: depName=ubuntu
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 30
     env:
       # renovate: datasource=github-tags depName=danmar/cppcheck versioning=loose
       CPPCHECK_VER: "2.19.1"
@@ -53,7 +53,18 @@ jobs:
       - name: Checkout repo
         # renovate: datasource=github-tags depName=actions/checkout versioning=loose
         uses: actions/checkout@v6.0.2
-
+      - name: Install Linux dependencies
+        run: |
+            sudo apt-get update
+            sudo apt-get install -y \
+              libx11-dev libx11-xcb-dev libxrandr-dev libxcursor-dev \
+              libxi-dev libudev-dev libgl1-mesa-dev \
+              libvorbis-dev libogg-dev libflac-dev \
+              libxinerama-dev libxext-dev libxrender-dev \
+              libxxf86vm-dev libxmu-dev \
+              libxcb-randr0-dev libxcb-image0-dev \
+              libfreetype6-dev libxkbcommon-dev \
+              libxcb1-dev xvfb pkg-config
       - name: Run cppcheck
         uses: ./.github/actions/cppcheck
 
@@ -61,7 +72,7 @@ jobs:
     name: "Clang-Tidy"
     # renovate: depName=ubuntu
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 30
     env:
       CC: clang-18
       CXX: clang++-18
@@ -70,14 +81,25 @@ jobs:
       - name: Checkout repo
         # renovate: datasource=github-tags depName=actions/checkout versioning=loose
         uses: actions/checkout@v6.0.2
-
+      - name: Install Linux dependencies
+        run: |
+            sudo apt-get update
+            sudo apt-get install -y \
+              libx11-dev libx11-xcb-dev libxrandr-dev libxcursor-dev \
+              libxi-dev libudev-dev libgl1-mesa-dev \
+              libvorbis-dev libogg-dev libflac-dev \
+              libxinerama-dev libxext-dev libxrender-dev \
+              libxxf86vm-dev libxmu-dev \
+              libxcb-randr0-dev libxcb-image0-dev \
+              libfreetype6-dev libxkbcommon-dev \
+              libxcb1-dev xvfb pkg-config
       - name: Run clang-tidy
         uses: ./.github/actions/clang-tidy
 
   build:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+    timeout-minutes: 30
     permissions:
       attestations: write
       contents: write
