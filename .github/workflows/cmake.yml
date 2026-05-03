@@ -242,9 +242,6 @@ jobs:
       #- name: Install packages
         #uses: ./.github/actions/install-packages
 
-      - name: Clean build directory
-        run: rm -rf ${{ env.BUILD_DIR }}
-
       - name: Cache CMake dependencies
         uses: actions/cache@v4
         with:
@@ -255,6 +252,9 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-${{ matrix.cxx }}-${{ env.BUILD_TYPE }}-
             ${{ matrix.os }}-${{ matrix.cxx }}-
+
+      - name: Clean build directory
+        run: rm -rf ${{ env.BUILD_DIR }}/CMakeFiles ${{ env.BUILD_DIR }}/CMakeCache.txt
 
       - name: Configure CMake
         uses: ./.github/actions/configure-cmake
