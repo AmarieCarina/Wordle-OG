@@ -248,8 +248,17 @@ jobs:
           path: ${{ env.ZIP_NAME }}
           retention-days: 30
 
-      - name: Runtime checks
-        uses: ./.github/actions/runtime-checks
+      - name: Runtime checks (Linux)
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+          xvfb-run bash -c "cat ${{ env.INPUT_FILENAME }} | tr -d '\r' | ./${{ env.ZIP_NAME }}/${{ env.EXECUTABLE_NAME }}"
+
+      - name: Runtime checks (Windows & Mac)
+        if: (!startsWith(matrix.os, 'ubuntu'))
+        run: |
+            cat ${{ env.INPUT_FILENAME }} | tr -d '\r' | ./${{ env.ZIP_NAME }}/${{ env.EXECUTABLE_NAME }}
 
       - name: Create release
         uses: ./.github/actions/create-release
