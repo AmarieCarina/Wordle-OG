@@ -245,6 +245,17 @@ jobs:
       - name: Clean build directory
         run: rm -rf ${{ env.BUILD_DIR }}
 
+      - name: Cache CMake dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.BUILD_DIR }}/_deps
+            ~/.cache/CPM
+          key: ${{ matrix.os }}-${{ matrix.cxx }}-${{ env.BUILD_TYPE }}-${{ hashFiles('**/CMakeLists.txt', '**/CPM.cmake') }}
+          restore-keys: |
+            ${{ matrix.os }}-${{ matrix.cxx }}-${{ env.BUILD_TYPE }}-
+            ${{ matrix.os }}-${{ matrix.cxx }}-
+
       - name: Configure CMake
         uses: ./.github/actions/configure-cmake
         with:

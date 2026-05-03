@@ -8,11 +8,11 @@ class WM {
     std::unordered_set<std::string> dictionary; //toate cuvintele disponibile
 
 public:
-    WM(const std::string& filename);
+    explicit WM(const std::string& filename);
 
     bool isValidWord(const std::string& word) const;
 
-    std::string getRandomWord() const;
+    // std::string getRandomWord() const;
 };
 
 #endif //POO2_WM_H
