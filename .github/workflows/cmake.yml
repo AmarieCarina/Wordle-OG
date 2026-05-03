@@ -185,7 +185,11 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
-          sudo apt-get install -y libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libgl1-mesa-dev libvorbis-dev libogg-dev libflac-dev libxinerama-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libfreetype6-dev
+          sudo apt-get install -y libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libgl1-mesa-dev libvorbis-dev libogg-dev libflac-dev libxinerama-dev libx11-xcb-dev libxcb-randr0-dev libxcb-image0-dev libfreetype6-dev libxext-dev libxrender-dev libxxf86vm-dev libxmu-dev libxi-dev
+
+      - name: Debug X11
+        if: startsWith(matrix.os, 'ubuntu')
+        run: ls /usr/include/X11/Xlib.h
 
       - name: Set timestamp, zip name, repo visibility
         env:
@@ -205,8 +209,8 @@ jobs:
               echo "Public repo"
           fi
 
-      - name: Install packages
-        uses: ./.github/actions/install-packages
+      #- name: Install packages
+        #uses: ./.github/actions/install-packages
 
       - name: Clean build directory
         run: rm -rf ${{ env.BUILD_DIR }}
