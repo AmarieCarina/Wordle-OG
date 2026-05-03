@@ -44,7 +44,7 @@ jobs:
   cppcheck:
     name: "Cppcheck"
     # renovate: depName=ubuntu
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       # renovate: datasource=github-tags depName=danmar/cppcheck versioning=loose
@@ -140,7 +140,7 @@ jobs:
             cxx: clang++
             # renovate: depName=macos
             name: "macOS 14 Apple Clang 15"
-            cmake_flags: "-DUSE_ASAN=OFF -DBUILD_SHARED_LIBS=ON"
+            cmake_flags: "-DUSE_ASAN=OFF -DBUILD_SHARED_LIBS=OFF"
             cmake_generator: Ninja
             # This env does not currently run address sanitizers
             #runs_asan: false
@@ -181,7 +181,7 @@ jobs:
         # renovate: datasource=github-tags depName=actions/checkout versioning=loose
         uses: actions/checkout@v6.0.2
 
-      - name: Install Linux dependencies  # <--- ACESTA ESTE PASUL NOU
+      - name: Install Linux dependencies
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
