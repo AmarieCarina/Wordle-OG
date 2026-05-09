@@ -252,6 +252,8 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-${{ matrix.cxx }}-${{ env.BUILD_TYPE }}-
             ${{ matrix.os }}-${{ matrix.cxx }}-
+      - name: Run cppcheck
+        run: cppcheck --enable=all --suppress=unusedFunction src/
 
       - name: Clean build directory
         run: rm -rf ${{ env.BUILD_DIR }}/CMakeFiles ${{ env.BUILD_DIR }}/CMakeCache.txt
