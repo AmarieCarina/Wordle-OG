@@ -16,8 +16,8 @@ GE::GE(sf::Font& font, sf::Font& fontTitle)
     warningLabel{350.f,80.f,"",font,20},
     showWarning{false}
     {
-        WM engine("assets/words.txt");
-        targetWord=engine.WM::getRandomWord();
+        const WM engine("assets/words.txt");
+        targetWord=engine.getRandomWord();
     ////////////////////targetWord = wordmanager.getRandomWord();/////////////////////////////
         initGrid(font);
         initKeyboard(font);
