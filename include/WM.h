@@ -12,7 +12,7 @@ public:
 
     bool isValidWord(const std::string& word) const;
 
-    // std::string getRandomWord() const;
+    std::string getRandomWord() const;
 };
 
 #endif //POO2_WM_H

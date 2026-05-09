@@ -127,10 +127,7 @@ int main() {
                                 engine.addLetter(k.getLetter());
                             }
                         }
-
                     }
-
-
                 }
 
                 //INPUT TASTATURA FIZICA (litere)
@@ -151,7 +148,7 @@ int main() {
             }
 
             window.clear(sf::Color::Black);
-            ////chestii care se repeta la infinit
+            //// se repeta la infinit
             engine.draw(window);
 
             if (Instr && Instr->getVisible()) {
@@ -163,11 +160,6 @@ int main() {
                 Intro->draw(window);
                 playButton.draw(window);
             }
-
-
-
-
-
 
             ///////////
             window.display();

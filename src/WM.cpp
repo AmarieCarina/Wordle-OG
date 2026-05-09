@@ -35,14 +35,14 @@ bool WM::isValidWord(const std::string& word) const {
     return false;
 }
 
-// std::string WM::getRandomWord() const {
-//     if (words.empty()) {
-//         return "PIZZA";
-//     }
-//
-//     static std::mt19937 rng(std::random_device{}());
-//
-//     std::uniform_int_distribution<std::size_t> dist{0,words.size()-1};
-//
-//     return words[dist(rng)];
-// }
+std::string WM::getRandomWord() const {
+    if (words.empty()) {
+        return "PIZZA";
+    }
+
+    static std::mt19937 rng(std::random_device{}());
+
+    std::uniform_int_distribution<std::size_t> dist{0,words.size()-1};
+
+    return words[dist(rng)];
+}

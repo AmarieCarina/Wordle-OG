@@ -12,12 +12,13 @@ GE::GE(sf::Font& font, sf::Font& fontTitle)
     currentCol{0},
     maxRows{6},
     maxCols{5},
-    targetWord{"UNION"},
     wordmanager{"assets/words.txt"},
     warningLabel{350.f,80.f,"",font,20},
     showWarning{false}
     {
-        ////////////////////targetWord = wordmanager.getRandomWord();/////////////////////////////
+        WM engine("assets/words.txt");
+        targetWord=engine.WM::getRandomWord();
+    ////////////////////targetWord = wordmanager.getRandomWord();/////////////////////////////
         initGrid(font);
         initKeyboard(font);
 
