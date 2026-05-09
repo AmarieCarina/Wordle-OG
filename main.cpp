@@ -97,6 +97,10 @@ int main() {
         ////////////////// B U C L A   W H I L E /////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////
 
+        if (std::getenv("GITHUB_ACTIONS")) {
+            window.close();
+        }
+
         while (window.isOpen()) {
 
             while (const std::optional event=window.pollEvent()) {
