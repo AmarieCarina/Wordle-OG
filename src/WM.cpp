@@ -35,6 +35,7 @@ bool WM::isValidWord(const std::string& word) const {
     return false;
 }
 
+// cppcheck-suppress unusedFunction
 std::string WM::getRandomWord() const {
     if (words.empty()) {
         return "PIZZA";
